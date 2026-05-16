@@ -1,0 +1,581 @@
+/* C:\quran-similarity-app\frontend\src\styles\ImmersiveView.css */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   FULL SCREEN OVERLAY
+   ═════════════════════════════════════════════════════════════════════ */
+
+.immersive-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: #000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.immersive-enter {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.immersive-scene {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════
+   PARALLAX LAYERS
+   ═════════════════════════════════════════════════════════════════════ */
+
+.immersive-layer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 140%;
+    left: -20%;
+    will-change: transform;
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════
+   ATMOSPHERIC EFFECTS
+   ═════════════════════════════════════════════════════════════════════ */
+
+.immersive-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
+    pointer-events: none;
+    z-index: 100;
+}
+
+.immersive-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3CfeBlend in='SourceGraphic' in2='SourceGraphic'/%3E%3C/filter%3E%3CfeComposite in2='SourceGraphic' operator='in'/%3E%3C/filter%3E%3CfeColorMatrix type='hueRotate' values='0'/%3E%3C/filter%3E%3CfeComponentTransfer%3E%3CfeFuncR type='discrete' tableValues='0 0'/%3E%3C/filter%3E%3CfeComponentTransfer%3E%3CfeFuncG type='linear' slope='0.3' intercept='0'/%3E%3C/filter%3E%3C/filter%3E");
+    pointer-events: none;
+    z-index: 99;
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════
+   HUD (HEADS-UP DISPLAY)
+   ═════════════════════════════════════════════════════════════════════ */
+
+.immersive-hud {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 200;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 100%);
+    backdrop-filter: blur(12px);
+    padding-top: max(env(safe-area-inset-top, 16px));
+    opacity: 0;
+    transition: opacity 0.8s ease 0.8s;
+}
+
+.immersive-enter .immersive-hud {
+    opacity: 1;
+}
+
+.immersive-hud-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.hud-icon {
+    font-size: 26px;
+    line-height: 1;
+}
+
+.hud-name {
+    color: #f1f5f9;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.immersive-hud-center {
+    text-align: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.hud-streak {
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.hud-milestone {
+    color: #94a3b8;
+    font-size: 13px;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+.immersive-hud-right {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.hud-next {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(251, 191, 36, 0.15);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    padding: 5px 12px;
+    border-radius: 8px;
+    color: #fbbf24;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.hud-tagline {
+    color: #64748b;
+    font-size: 11px;
+    font-style: italic;
+    margin-top: 6px;
+    line-height: 1.3;
+}
+
+.immersive-close {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 201;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #cbd5e1;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(6px);
+}
+
+.immersive-close:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.4);
+    transform: scale(1.1);
+    color: #fff;
+}
+
+.immersive-close:active {
+    transform: scale(0.95);
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════
+   CONTROLS HINT
+   ═══════════════════════════════════════════════════════════════════ */
+
+.immersive-controls-hint {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    z-index: 200;
+    pointer-events: none;
+    transition: opacity 2.5s ease 5s ease;
+}
+
+.immersive-enter .immersive-controls-hint {
+    opacity: 0;
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════
+   TOUCH AREA
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.immersive-touch-area {
+    position: absolute;
+    inset: 0;
+    z-index: 150;
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════
+   THEME-SPECIFIC ELEMENTS
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Moon (Sky) */
+.sky-moon {
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #fff8e1 0%, #fcd34d 40%, transparent 65%);
+    box-shadow: 0 0 30px 10px rgba(255, 220, 100, 0.4), 0 0 60px 15px rgba(255, 200, 80, 0.15);
+}
+
+/* Big Stars (Sky) */
+.sky-big-star {
+    border-radius: 50%;
+    background: #fff;
+    box-shadow:
+        0 0 10px 3px rgba(255, 255, 255, 0.8),
+        0 0 25px 6px rgba(180, 200, 255, 0.4);
+}
+
+/* Constellation line (Sky) */
+.sky-constellation {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(180, 200, 255, 0.2), transparent);
+    transform-origin: left center;
+}
+
+/* Mountain layer (Sky) */
+.sky-mtn {
+    clip-path: polygon(0% 100%, 0% 45%, 8% 28%, 18% 18%, 30% 25%, 48% 30%, 65% 45%, 82% 55%, 100% 50%, 100% 100%);
+}
+
+/* Trees (Forest) */
+.forest-element {
+    position: absolute;
+    line-height: 1;
+    user-select: none;
+}
+
+/* House outline */
+.house-outline {
+    border: 2px solid rgba(200, 160, 100, 0.4);
+    border-bottom: 4px solid rgba(200, 160, 100, 0.5);
+}
+
+/* House roof */
+.house-outline {
+    border-left: 17% solid transparent;
+    border-right: 17% solid transparent;
+    border-bottom: 10px solid #8B5E3C;
+}
+
+/* House windows */
+.house-window {
+    border-radius: 2px;
+    background: radial-gradient(circle, rgba(255, 200, 100, 0.9), rgba(255, 150, 50, 0.5) 50%, transparent 70%);
+}
+
+/* House door */
+.house-door {
+    background: #5D4037;
+    border-radius: 3px 3px 0 0;
+}
+
+/* Lantern glow (Lanterns) */
+.lantern-glow {
+    filter: drop-shadow(0 0 12px rgba(255, 180, 50, 0.6)) drop-shadow(0 0 25px rgba(255, 150, 30, 0.25));
+}
+
+/* Fog layers (Lanterns) */
+.lantern-fog1,
+.lantern-fog2 {
+    position: absolute;
+    bottom: 0;
+    width: 140%;
+    left: -20%;
+    pointer-events: none;
+}
+
+.lantern-fog1 {
+    height: 40%;
+    background: linear-gradient(180deg, transparent 0%, rgba(20, 15, 30, 0.3) 50%, rgba(20, 15, 30, 0.5) 100%);
+    filter: blur(15px);
+}
+
+.lantern-fog2 {
+    height: 30%;
+    background: linear-gradient(180deg, transparent 0%, rgba(20, 10, 20, 0.4) 40%, rgba(10, 5, 20, 0.6) 100%);
+    filter: blur(20px);
+}
+
+/* Path line (Lanterns) */
+.lantern-path {
+    border-radius: 2px;
+}
+
+/* Garden fountain */
+.garden-fountain {
+    border-radius: 40%;
+    box-shadow: 0 0 30px 10px rgba(100, 200, 255, 0.2);
+}
+
+/* Library shelf */
+.lib-shelf1,
+.lib-shelf2 {
+    box-shadow: inset 0 -2px 8px rgba(0, 0, 0, 0.5), inset 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Library lamp glow */
+.lib-lamp,
+.lib-lamp2 {
+    border-radius: 50%;
+}
+
+/* Ship deck */
+.shp-deck {
+    background: linear-gradient(180deg, #8B6914 0%, #6B5310 100%);
+    border-radius: 4px 4px 0 0;
+}
+
+/* Ship railing */
+.shp-railing {
+    background: #8B6914;
+}
+
+/* City window flicker */
+.window-flicker {
+    animation: window-flicker 2s ease-in-out infinite;
+}
+
+/* Ship wave */
+.shp-wave1,
+.shp-wave2 {
+    border-radius: 50% 50% 0 0 / 100% 50% 0;
+}
+
+/* Dune shapes (Oasis) */
+.oas-dunes-far,
+.oas-dunes-mid,
+.oas-near {
+    position: absolute;
+    width: 140%;
+    left: -20%;
+}
+
+/* Oasis pool */
+.oas-pool {
+    border-radius: 40%;
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════
+   THEME-SPECIFIC ANIMATIONS
+   ═════════════════════════════════════════════════════════════════════ */
+
+/* Stars pulse (Sky) */
+@keyframes star-pulse {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Lantern sway (Lanterns) */
+@keyframes lantern-sway {
+    0%, 100% {
+        transform: rotate(-3deg);
+    }
+    50% {
+        transform: rotate(3deg);
+    }
+}
+
+/* Firefly float (Forest) */
+@keyframes firefly-float {
+    0% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    50% {
+        transform: translate(10px, -15px);
+        opacity: 0.3;
+    }
+    80% {
+        opacity: 0.8;
+        transform: translate(20px, -5px);
+    }
+    100% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+}
+
+/* Garden sway (Garden) */
+@keyframes garden-sway {
+    0%, 100% {
+        transform: rotate(-3deg);
+    }
+    50% {
+        transform: rotate(3deg);
+    }
+}
+
+/* Butterfly path (Garden) */
+@keyframes butterfly-path {
+    0% {
+        transform: translate(-100vw, 20vh) rotate(0deg);
+    }
+    25% {
+        transform: translate(15vw, -3vh) rotate(5deg);
+    }
+    50% {
+        transform: translate(30vw, -6vh) rotate(-3deg);
+    }
+    75% {
+        transform: translate(15vw, -3vh) rotate(5deg);
+    }
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
+/* Bird fly (Ship) */
+@keyframes bird-fly {
+    0% {
+        transform: translate(-100vw, 20vh) rotate(0deg);
+    }
+    50% {
+        transform: translate(100vw, -15vh) rotate(-5deg);
+    }
+    100% {
+        transform: translate(200vw, 20vh) rotate(0deg);
+    }
+}
+
+/* Wave drift (Ship) */
+@keyframes wave-drift {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(15px);
+    }
+}
+
+/* Window flicker (City) */
+@keyframes window-flicker {
+    0%, 90%, 100% {
+        opacity: 0.2;
+    }
+    50%, 60% {
+        opacity: 0.9;
+    }
+}
+
+
+/* ═════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+    .immersive-hud {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .immersive-hud-left {
+        gap: 6px;
+    }
+
+    .hud-icon {
+        font-size: 20px;
+    }
+
+    .hud-name {
+        font-size: 12px;
+        letter-spacing: 0.5px;
+    }
+
+    .immersive-hud-center {
+        order: 3;
+        flex: 0 0 100%;
+        margin-top: 4px;
+    }
+
+    .hud-streak {
+        font-size: 24px;
+    }
+
+    .hud-milestone {
+        font-size: 11px;
+        margin-top: 2px;
+    }
+
+    .immersive-hud-right {
+        order: 2;
+        text-align: left;
+        flex: 0 0 auto;
+        max-width: 45%;
+    }
+
+    .hud-next {
+        font-size: 11px;
+        padding: 3px 8px;
+    }
+
+    .hud-tagline {
+        font-size: 10px;
+        margin-top: 4px;
+    }
+
+    .immersive-close {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+        top: 12px;
+        right: 12px;
+    }
+
+    .immersive-controls-hint {
+        font-size: 11px;
+        bottom: 16px;
+    }
+
+    .hud-name,
+    .hud-tagline {
+        letter-spacing: 0.5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .immersive-hud {
+        padding: 10px 12px;
+    }
+
+    .hud-streak {
+        font-size: 20px;
+    }
+
+    .immersive-hud-right {
+        display: none;
+    }
+
+    .immersive-controls-hint {
+        bottom: 12px;
+        font-size: 10px;
+    }
+}

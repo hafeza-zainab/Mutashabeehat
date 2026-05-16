@@ -1,0 +1,8 @@
+//C:\quran-similarity-app\frontend\src\shared\services\taskApi.js
+import { API_BASE, getAuthHeader, handleResponse, handleApiError } from './apiConfig';
+export const getStreak = async () => { try { const res = await fetch(`${API_BASE}/tasks/streak`, { headers: getAuthHeader() }); return await handleResponse(res); } catch (error) { return { success: true, data: { streak: 0 } }; } };
+export const getTasks = async (date) => { try { const res = await fetch(`${API_BASE}/tasks?date=${date}`, { headers: getAuthHeader() }); return await handleResponse(res); } catch (error) { return handleApiError(error, 'Fetch tasks'); } };
+export const addTask = async (data) => { try { const res = await fetch(`${API_BASE}/tasks`, { method: 'POST', headers: getAuthHeader(), body: JSON.stringify(data) }); return await handleResponse(res); } catch (error) { return handleApiError(error, 'Add task'); } };
+export const updateTask = async (id, status) => { try { const res = await fetch(`${API_BASE}/tasks/${id}`, { method: 'PATCH', headers: getAuthHeader(), body: JSON.stringify({ status }) }); return await handleResponse(res); } catch (error) { return handleApiError(error, 'Update task status'); } };
+export const editTaskTitle = async (id, title) => { try { const res = await fetch(`${API_BASE}/tasks/${id}`, { method: 'PUT', headers: getAuthHeader(), body: JSON.stringify({ title }) }); return await handleResponse(res); } catch (error) { return handleApiError(error, 'Edit task title'); } };
+export const deleteTask = async (id) => { try { const res = await fetch(`${API_BASE}/tasks/${id}`, { method: 'DELETE', headers: getAuthHeader() }); return await handleResponse(res); } catch (error) { return handleApiError(error, 'Delete task'); } };
