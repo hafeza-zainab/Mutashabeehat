@@ -1,0 +1,5 @@
+.home-dashboard-container { max-width: 1200px; margin: 0 auto; padding: 30px; }
+.welcome-banner { background: white; padding: 30px 40px; border-radius: 12px; margin-bottom: 30px; border-left: 6px solid #F2C94C; box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
+.welcome-banner h1 { color: #004D40; margin-bottom: 8px; }
+.welcome-banner p { color: #6B7280; font-size: 16px; }
+.dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }

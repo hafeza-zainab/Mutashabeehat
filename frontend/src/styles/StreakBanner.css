@@ -1,0 +1,6 @@
+.streak-banner { display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, #004D40 0%, #00695C 100%); padding: 25px 30px; border-radius: 12px; color: white; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0, 77, 64, 0.2); }
+.streak-info { display: flex; align-items: center; gap: 15px; }
+.streak-fire { font-size: 36px; }
+.streak-info h2 { margin: 0; font-size: 22px; }
+.streak-info p { margin: 0; opacity: 0.9; font-size: 14px; }
+.daily-quote { text-align: right; max-width: 50%; font-style: italic; font-size: 15px; line-height: 1.6; opacity: 0.95; }
