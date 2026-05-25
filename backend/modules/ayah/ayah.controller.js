@@ -1,9 +1,0 @@
-//C:\quran-similarity-app\backend\modules\ayah\ayah.controller.js
-const AyahModel = require("./ayah.model");
-const { formatSuccess, formatError } = require("../../utils/responseFormatter");
-exports.getSurahs = async (req, res, next) => { try { const surahs = await AyahModel.getAllSurahs(); res.status(200).json(formatSuccess(surahs)); } catch (error) { next(error); } };
-exports.getAyahsBySurah = async (req, res, next) => { try { const ayahs = await AyahModel.getAyahsBySurah(req.params.surah); res.status(200).json(formatSuccess(ayahs)); } catch (error) { next(error); } };
-exports.getAyahContext = async (req, res, next) => { try { const { surah, ayah } = req.query; if (!surah || !ayah) return res.status(400).json(formatError("Surah and Ayah required")); const context = await AyahModel.getAyahContext(surah, ayah); res.status(200).json(formatSuccess(context)); } catch (error) { next(error); } };
-exports.getPageDetails = async (req, res, next) => { try { const { page } = req.query; if (!page) return res.status(400).json(formatError("Page required")); const details = await AyahModel.getPageDetails(page); if (!details) return res.status(404).json(formatError("Page not found")); res.status(200).json(formatSuccess(details)); } catch (error) { next(error); } };
-exports.getJuzzPages = async (req, res, next) => { try { const { juzz } = req.query; if (!juzz) return res.status(400).json(formatError("Juzz required")); const pages = await AyahModel.getPagesByJuzz(juzz); res.status(200).json(formatSuccess(pages.map(p => p.page))); } catch (error) { next(error); } };
-exports.getPagesInRange = async (req, res, next) => { try { const { start, end } = req.query; if (!start || !end) return res.status(400).json(formatError("Start and End pages required")); const pages = await AyahModel.getPagesInRange(start, end); res.status(200).json(formatSuccess(pages)); } catch (error) { next(error); } };
